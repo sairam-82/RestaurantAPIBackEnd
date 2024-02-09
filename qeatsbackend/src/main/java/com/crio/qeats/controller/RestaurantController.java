@@ -1,5 +1,4 @@
 /*
-
  *
  *  * Copyright (c) Crio.Do 2019. All rights reserved
  *
@@ -58,7 +57,6 @@ public class RestaurantController {
           .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
       log.info("getRestaurants returned {}", getRestaurantsResponse);
       //CHECKSTYLE:ON
-
     return ResponseEntity.ok().body(getRestaurantsResponse);
   }
 

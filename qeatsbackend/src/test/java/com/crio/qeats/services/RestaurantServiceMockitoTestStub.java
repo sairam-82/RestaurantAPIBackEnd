@@ -53,7 +53,7 @@ public class RestaurantServiceMockitoTestStub {
     // TODO CRIO_TASK_MODULE_MOCKITO
     //  What to do with this Restaurant[] ? Looks unused?
     //  Look for the "assert" statements in the tests
-    //  following and find out what to do with the array.
+  
 
     restaurant1 = restaurants[0];
     restaurant2 = restaurants[1];

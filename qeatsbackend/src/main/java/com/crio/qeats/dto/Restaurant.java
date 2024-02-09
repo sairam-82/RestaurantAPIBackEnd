@@ -13,6 +13,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,7 +39,8 @@ import lombok.Setter;
 @Setter
 
 public class Restaurant {
-
+    @JsonIgnore
+    public String id;
     public String restaurantId;
     public String name;
     public String city;
@@ -48,7 +50,8 @@ public class Restaurant {
     public String opensAt;
     public String closesAt;
     public List<String> attributes;
-
-
 }
+
+
+
 

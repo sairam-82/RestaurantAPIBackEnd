@@ -3,7 +3,6 @@ package com.crio.qeats.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.times;
@@ -27,9 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 @ExtendWith(MockitoExtension.class)
 public class RestaurantServiceMockitoTestStub {
@@ -37,7 +34,7 @@ public class RestaurantServiceMockitoTestStub {
   protected static final String FIXTURES = "fixtures/exchanges";
 
   protected ObjectMapper objectMapper = new ObjectMapper();
-
+  
   protected Restaurant restaurant1;
   protected Restaurant restaurant2;
   protected Restaurant restaurant3;
@@ -53,19 +50,20 @@ public class RestaurantServiceMockitoTestStub {
     String fixture =
         FixtureHelpers.fixture(FIXTURES + "/mocking_list_of_restaurants.json");
     Restaurant[] restaurants = objectMapper.readValue(fixture, Restaurant[].class);
-    restaurant1=restaurants[0];
-    restaurant2=restaurants[1];
-    restaurant3=restaurants[2];
-    restaurant4=restaurants[3];
-    restaurant5=restaurants[4];
-
     // TODO CRIO_TASK_MODULE_MOCKITO
     //  What to do with this Restaurant[] ? Looks unused?
     //  Look for the "assert" statements in the tests
     //  following and find out what to do with the array.
+
+    restaurant1 = restaurants[0];
+    restaurant2 = restaurants[1];
+    restaurant3 = restaurants[2];
+    restaurant4 = restaurants[3];
+    restaurant5 = restaurants[4];
+
   }
 
-  
+
 
   @Test
   public void  testFindNearbyWithin5km() throws IOException {
@@ -144,7 +142,6 @@ public class RestaurantServiceMockitoTestStub {
     assertEquals("12", allRestaurantsCloseByPeakHours.getRestaurants().get(0).getRestaurantId());
     assertEquals("14", allRestaurantsCloseByPeakHours.getRestaurants().get(1).getRestaurantId());
   }
-  
 
 }
 

@@ -49,6 +49,7 @@ public class RestaurantController {
   public ResponseEntity<GetRestaurantsResponse> getRestaurants(
       @Valid GetRestaurantsRequest getRestaurantsRequest) {
 
+        System.out.println(getRestaurantsRequest);
     log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;
 

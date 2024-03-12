@@ -70,8 +70,8 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
     ModelMapper modelMapper= modelMapperProvider.get();
     // RestaurantRepository restaurantRepository;
     List<RestaurantEntity> restaurantEntities= restaurantRepository.findAll();
-    System.out.println("response from mongo");
-    System.out.println(restaurantEntities);
+    // System.out.println("response from mongo");
+    // System.out.println(restaurantEntities);
     for(RestaurantEntity restaurantEntity:restaurantEntities){
       // System.out.println(restaurantEntity);
       if(isRestaurantCloseByAndOpen(restaurantEntity, currentTime, latitude, longitude, servingRadiusInKms)){
@@ -83,7 +83,6 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
 
       //CHECKSTYLE:OFF
       //CHECKSTYLE:ON
-
 
     return restaurants;
   }

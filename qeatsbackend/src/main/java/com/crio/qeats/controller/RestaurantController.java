@@ -6,12 +6,17 @@
 
 package com.crio.qeats.controller;
 
+import com.crio.qeats.dto.Restaurant;
 import com.crio.qeats.exchanges.GetRestaurantsRequest;
 import com.crio.qeats.exchanges.GetRestaurantsResponse;
 import com.crio.qeats.services.RestaurantService;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
+
 import lombok.Data;
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Data
 @Log4j2
 @RestController
+@RequestMapping(RestaurantController.RESTAURANT_API_ENDPOINT)
 public class RestaurantController {
 
   public static final String RESTAURANT_API_ENDPOINT = "/qeats/v1";
@@ -45,18 +51,28 @@ public class RestaurantController {
 
 
 
-  @GetMapping(RESTAURANT_API_ENDPOINT+RESTAURANTS_API)
+  @GetMapping(RESTAURANTS_API)
   public ResponseEntity<GetRestaurantsResponse> getRestaurants(
       @Valid GetRestaurantsRequest getRestaurantsRequest) {
 
-        System.out.println(getRestaurantsRequest);
-    log.info("getRestaurants called with {}", getRestaurantsRequest);
+        // System.out.println(getRestaurantsRequest);
+    // log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;
 
       //CHECKSTYLE:OFF
       getRestaurantsResponse = restaurantService
           .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
-      log.info("getRestaurants returned {}", getRestaurantsResponse);
+      // log.info("getRestaurants returned {}", getRestaurantsResponse);
+      if(getRestaurantsResponse!=null && !getRestaurantsResponse.getRestaurants().isEmpty()){
+        List<Restaurant> restaurants= getRestaurantsResponse.getRestaurants();
+        List<Restaurant> changedRes= new ArrayList<>();
+        for(Restaurant res:restaurants){
+         String name = res.getName().replace("é", "e");
+         res.setName(name);
+          changedRes.add(res);
+        }
+        return ResponseEntity.ok().body(new GetRestaurantsResponse(changedRes));
+      }
       //CHECKSTYLE:ON
     return ResponseEntity.ok().body(getRestaurantsResponse);
   }

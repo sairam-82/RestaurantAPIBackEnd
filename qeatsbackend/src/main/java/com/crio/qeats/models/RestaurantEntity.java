@@ -9,15 +9,18 @@ package com.crio.qeats.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 // Java class that maps to Mongo collection.
+
 // @Data@Getter@Setter
 @Document(collection = "restaurants")
 // @NoArgsConstructor
@@ -132,6 +135,7 @@ public class RestaurantEntity {
   public void setAttributes(List<String> attributes) {
     this.attributes = attributes;
   }
+  public RestaurantEntity(){}
 
   public RestaurantEntity(String id, @NotNull String restaurantId, @NotNull String name,
       @NotNull String city, @NotNull String imageUrl, @NotNull Double latitude,
@@ -159,6 +163,7 @@ public class RestaurantEntity {
   
 
   
+
 
 
 }

@@ -26,6 +26,7 @@ import com.crio.qeats.globals.GlobalConstants;
 import com.crio.qeats.models.ItemEntity;
 import com.crio.qeats.models.MenuEntity;
 import com.crio.qeats.models.RestaurantEntity;
+import com.crio.qeats.repositories.ItemRepository;
 import com.crio.qeats.repositories.MenuRepository;
 import com.crio.qeats.repositories.RestaurantRepository;
 import com.crio.qeats.utils.GeoLocation;
@@ -62,6 +63,9 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
 
   @Autowired
   private MenuRepository menuRepository;
+
+  
+  private ItemRepository itemRepository;
 
   @Autowired
   private Provider<ModelMapper> modelMapperProvider;
@@ -270,8 +274,8 @@ return restaurantList;
   Double latitude, Double longitude,
   String searchString, LocalTime currentTime, Double
   servingRadiusInKms) {
-  String regex = String.join("|", Arrays.asList(searchString.split("
-  ")));
+  String regex = String.join("|", Arrays.asList(searchString.split(" ")));
+ 
   Optional<List<ItemEntity>> optionalExactItems
   = itemRepository.findItemsByNameExact(searchString);
   Optional<List<ItemEntity>> optionalInexactItems

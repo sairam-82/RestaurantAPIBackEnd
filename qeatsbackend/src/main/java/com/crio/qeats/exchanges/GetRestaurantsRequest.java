@@ -56,7 +56,7 @@ public class GetRestaurantsRequest {
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
-    @JsonIgnore
+    // @JsonIgnore
     private String searchFor;
     public String getSearchFor() {
         return searchFor;
@@ -71,6 +71,14 @@ public class GetRestaurantsRequest {
     public GetRestaurantsRequest(Double latitude,Double longitude){
         this.latitude=latitude;
         this.longitude=longitude;
+    }
+ 
+
+    public GetRestaurantsRequest(@Max(90) @Min(-90) @NotNull Double latitude,
+            @Max(180) @Min(-180) @NotNull Double longitude, String searchFor) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.searchFor = searchFor;
     }
 
     @Override

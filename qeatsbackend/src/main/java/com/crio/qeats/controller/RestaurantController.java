@@ -20,6 +20,7 @@ import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,24 +58,49 @@ public class RestaurantController {
 
         // System.out.println(getRestaurantsRequest);
     // log.info("getRestaurants called with {}", getRestaurantsRequest);
-    GetRestaurantsResponse getRestaurantsResponse;
+    // GetRestaurantsResponse getRestaurantsResponse;
 
-      //CHECKSTYLE:OFF
-      getRestaurantsResponse = restaurantService
-          .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
-      // log.info("getRestaurants returned {}", getRestaurantsResponse);
-      if(getRestaurantsResponse!=null && !getRestaurantsResponse.getRestaurants().isEmpty()){
-        List<Restaurant> restaurants= getRestaurantsResponse.getRestaurants();
-        List<Restaurant> changedRes= new ArrayList<>();
-        for(Restaurant res:restaurants){
-         String name = res.getName().replace("é", "e");
-         res.setName(name);
-          changedRes.add(res);
-        }
-        return ResponseEntity.ok().body(new GetRestaurantsResponse(changedRes));
+    //   //CHECKSTYLE:OFF
+    //   getRestaurantsResponse = restaurantService
+    //       .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
+    //   // log.info("getRestaurants returned {}", getRestaurantsResponse);
+    //   if(getRestaurantsResponse!=null && !getRestaurantsResponse.getRestaurants().isEmpty()){
+    //     List<Restaurant> restaurants= getRestaurantsResponse.getRestaurants();
+    //     List<Restaurant> changedRes= new ArrayList<>();
+    //     for(Restaurant res:restaurants){
+    //      String name = res.getName().replace("é", "e");
+    //      res.setName(name);
+    //       changedRes.add(res);
+    //     }
+    //     return ResponseEntity.ok().body(new GetRestaurantsResponse(changedRes));
+    //   }
+     List<Restaurant> restaurants;
+     GetRestaurantsResponse getRestaurantsResponse;
+    if (!StringUtils.isEmpty(getRestaurantsRequest.getSearchFor())) {
+
+      getRestaurantsResponse =
+      
+      restaurantService.findRestaurantsBySearchQuery(getRestaurantsRequest,
+      LocalTime.now());
+      log.info("getRestaurants returned {}", getRestaurantsResponse);
+      restaurants = getRestaurantsResponse.getRestaurants();
+      } else {
+      getRestaurantsResponse =
+      restaurantService.findAllRestaurantsCloseBy(getRestaurantsRequest,
+      LocalTime.now());
+      restaurants = getRestaurantsResponse.getRestaurants();
       }
+      for (int i = 0; i < restaurants.size(); i++) {
+      restaurants.get(i).setName(restaurants.get(i).getName().replace("é",
+      "?"));
+      }
+      log.info("getRestaurants returned {}", getRestaurantsResponse);
+      return ResponseEntity.ok().body(getRestaurantsResponse);
+      
+      // return ResponseEntity.badRequest().body(null);
+      
       //CHECKSTYLE:ON
-    return ResponseEntity.ok().body(getRestaurantsResponse);
+    // return ResponseEntity.ok().body(getRestaurantsResponse);
   }
 
   // @GetMapping(RESTAURANT_API_ENDPOINT + RESTAURANTS_API)

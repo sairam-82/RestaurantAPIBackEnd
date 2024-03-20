@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright (c) Crio.Do 2019. All rights reserved
+ * * Copyright (c) Crio.Do 2019. All rights reserved
  *
  */
 
@@ -12,18 +12,19 @@ import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
+
 @Repository
 public interface RestaurantRepository extends MongoRepository<RestaurantEntity, String> {
     @Query("{'name': {$regex: '^?0$', $options: 'i'}}")
-Optional<List<RestaurantEntity>> findRestaurantsByNameExact(String
-name);
-@Query("{'name': {$regex: '.*?0.*', $options: 'i'}}")
-Optional<List<RestaurantEntity>> findRestaurantsByName(String name);
-Optional<List<RestaurantEntity>>
-findByAttributesInIgnoreCase(List<String> attributes);
-Optional<List<RestaurantEntity>>
-findRestaurantsByRestaurantIdIn(List<String> restaurantIds);
-   
+    Optional<List<RestaurantEntity>> findRestaurantsByNameExact(String name);
+
+    @Query("{'name': {$regex: '.*?0.*', $options: 'i'}}")
+    Optional<List<RestaurantEntity>> findRestaurantsByName(String name);
+
+    Optional<List<RestaurantEntity>> findByAttributesInIgnoreCase(List<String> attributes);
+
+    Optional<List<RestaurantEntity>> findRestaurantsByRestaurantIdIn(List<String> restaurantIds);
+
 
 }
 
